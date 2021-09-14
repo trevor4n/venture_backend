@@ -39,12 +39,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'venture'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    # Add corsheader right BEFORE 'django.middleware.common.CommonMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -53,6 +56,21 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'venture_backend.urls'
+
+#  todo - Herkou deploy 
+    # To prevent access to your API from other applications add the
+    # CORS_ALLOW_ORIGINS list and include only your front end app's
+    # URLs (localhost and deployed).  This list prevents a front end 
+    # from connecting to your back end unless it comes from a listed origin:
+
+# CORS_ALLOWED_ORIGINS = [
+#     "https://example.com",
+#     "http://localhost:3000",
+#     "http://127.0.0.1:3000"
+# ]
+
+    # OR
+CORS_ALLOW_ALL_ORIGINS = True
 
 TEMPLATES = [
     {
