@@ -35,7 +35,7 @@ class Restriction(models.Model):
     destination = models.CharField(max_length=3, default='ES')
     origin_type = models.CharField(max_length=100, default='country_code')
     origin = models.CharField(max_length=3, default='DE')
-    arrival_date = models.DateField(format='%Y-%m-%d', default='2020-10-15')
+    arrival_date = models.DateField(default='2020-10-15')
 
     def __str__(self):
         return self.title

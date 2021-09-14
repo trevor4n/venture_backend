@@ -150,4 +150,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # venture restriction date format 
 # ref - (compatible with TravelSafe) https://developers.travelperk.com/docs/sandbox-environment-1#available-locations
-DATE_INPUT_FORMATS = ['%Y-%m-%d']
+DATE_INPUT_FORMATS = ['%Y-%m-%d',]
