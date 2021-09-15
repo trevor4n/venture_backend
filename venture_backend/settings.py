@@ -17,18 +17,15 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if os.environ['MODE'] == 'dev' else False
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -39,9 +36,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',
     'venture',
-    'django_extensions'
+    'corsheaders',
+    'django_extensions',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -51,12 +49,19 @@ MIDDLEWARE = [
     # Add corsheader right BEFORE 'django.middleware.common.CommonMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    # todo - Section Django REST Article
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'venture_backend.urls'
+
+# todo - Section Django REST Article
+# CORS_ORIGIN_WHITELIST = [
+#     'http://localhost:3000',
+# ]
 
 #  todo - Herkou deploy 
     # To prevent access to your API from other applications add the
@@ -105,7 +110,6 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -152,3 +156,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # venture restriction date format 
 # ref - (compatible with TravelSafe) https://developers.travelperk.com/docs/sandbox-environment-1#available-locations
 DATE_INPUT_FORMATS = ['%Y-%m-%d',]
+
+# todo - Django REST Framework
+# REST_FRAMEWORK = {
+#     # Use Django's standard `django.contrib.auth` permissions,
+#     # or allow read-only access for unauthenticated users.
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+#     ]
+# }
+
+# todo - Django REST Framework
+# Simple JWT ! - https://git.generalassemb.ly/flex-323/django-rest-framework#:~:text=If%20you%20would%20like%20to%20use%20JWT%20in%20your%20Django%20REST%20framework%20app%2C%20the%20documentation%20recommends%20the%20Simple%20JWT%20package%20as%20a%20good%20place%20to%20start.%20If%20you%20are%20using%20a%20separate%20front-end%20framework%20for%20your%20Django%20application%2C%20this%20is%20probably%20the%20way%20to%20go!

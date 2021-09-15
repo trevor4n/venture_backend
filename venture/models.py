@@ -3,10 +3,12 @@ from django.db import models
 class Trip(models.Model):
     name = models.CharField(max_length=100)
     destination = models.CharField(max_length=100)
-    # todo - implement layovers, secondary destinations, & timeline
-    description = models.TextField()
+    # stretch - implement layovers, secondary destinations, & timeline
+    description = models.TextField(default='blank')
     # iata_code = models.CharField(max_length=3)
-    photo_url = models.TextField()
+    photo_url = models.TextField(default='blank')
+    # todo - tunr technique:
+    # photo_url = models.CharField(max_length=100, null=True)
     
     def __str__(self):
         return self.name
@@ -18,7 +20,7 @@ class Guideline(models.Model):
         related_name='guidelines'
     )
     # ref - https://developers.travelperk.com/docs/sandbox-environment-1#travel-restrictions
-    location_type = models.CharField(max_length=100, default='country_code')
+    location_type = models.CharField(max_length=15, default='country_code')
     location = models.CharField(max_length=3, default='DE')
 
     def __str__(self):
@@ -31,9 +33,9 @@ class Restriction(models.Model):
         related_name='restrictions'
     )
     # ref - https://developers.travelperk.com/docs/sandbox-environment-1#local-summary
-    destination_type = models.CharField(max_length=100, default='country_code')
+    destination_type = models.CharField(max_length=15, default='country_code')
     destination = models.CharField(max_length=3, default='ES')
-    origin_type = models.CharField(max_length=100, default='country_code')
+    origin_type = models.CharField(max_length=15, default='country_code')
     origin = models.CharField(max_length=3, default='DE')
     arrival_date = models.DateField(default='2020-10-15')
 
