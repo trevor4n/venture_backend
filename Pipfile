@@ -11,6 +11,9 @@ django-extensions = "*"
 ipython = "*"
 djangorestframework = "*"
 requests = "*"
+whitenoise = "*"
+dj-database-url = "*"
+gunicorn = "*"
 
 [dev-packages]
 

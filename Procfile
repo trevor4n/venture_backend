@@ -1,0 +1,1 @@
+web: gunicorn venture_backend.wsgi

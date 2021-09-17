@@ -83,7 +83,7 @@ class GuidelineDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Guideline.objects.all()
     serializer_class = GuidelineSerializer
 
-# todo - Section Django REST Article
+# icebox - Section Django REST Article
 # class TripView(viewsets.ModelViewSet):  
 #     serializer_class = TripSerializer   
 #     queryset = Trip.objects.all()     

@@ -7,7 +7,7 @@ class Trip(models.Model):
     description = models.TextField(default='blank')
     # iata_code = models.CharField(max_length=3)
     photo_url = models.TextField(default='blank')
-    # todo - tunr technique:
+    # stretch - tunr ex
     # photo_url = models.CharField(max_length=100, null=True)
     
     def __str__(self):

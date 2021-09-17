@@ -22,6 +22,6 @@ urlpatterns = [
     path('', include('venture.urls')),
     # Django REST Framework
     path('api-auth', include('rest_framework.urls', namespace='rest_framework')),
-    # todo - Section Django REST Article
+    # stretch - Section Django REST Article
     # path('api/', include('venture.urls')),
 ]
