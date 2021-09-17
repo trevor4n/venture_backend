@@ -1,15 +1,17 @@
 # from django.shortcuts import render, redirect
 from .models import Trip, Guideline, Restriction, Airline
 
-# Django REST Framework - JSONN Responses in Django
-# from django.http import JsonResponse
-
 # Django REST Framework
 from .serializers import TripSerializer, GuidelineSerializer 
 from rest_framework import generics
 
-# todo - Section Django REST Article
-from rest_framework import viewsets
+# icebox - Section Django REST Article
+# from rest_framework import viewsets
+
+# Django REST Framework - JSONN Responses in Django
+from django.http import JsonResponse
+
+import requests
 
 # def trip_list(req):
 #     trips = Trip.objects.all()
@@ -84,3 +86,11 @@ class GuidelineDetail(generics.RetrieveUpdateDestroyAPIView):
 # class TripView(viewsets.ModelViewSet):  
 #     serializer_class = TripSerializer   
 #     queryset = Trip.objects.all()     
+
+
+def proxy(req):
+    r = requests.get(url='https://www.thecolorapi.com/id?hex=FFFF00')
+    data = r.json()
+    print(r.status_code)
+    print(data)
+    return JsonResponse(data, safe=False)

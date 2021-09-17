@@ -10,6 +10,7 @@ django-cors-headers = "*"
 django-extensions = "*"
 ipython = "*"
 djangorestframework = "*"
+requests = "*"
 
 [dev-packages]
 
