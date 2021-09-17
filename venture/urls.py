@@ -17,5 +17,8 @@ urlpatterns = [
     path('trips/<int:pk>', views.TripDetail.as_view(), name='trip_detail'),
     path('guidelines/', views.GuidelineList.as_view(), name='guideline_list'),
     path('guidelines/<int:pk>', views.GuidelineDetail.as_view(), name='guideline_detail'),
-    path('proxy/',views.proxy)
+    
+    # ref - https://docs.djangoproject.com/en/3.0/topics/http/urls/#path-converters
+    path('proxy/', views.proxy),
+    path('proxy/<slug:lt>/<str:loc>/', views.proxy), 
 ]

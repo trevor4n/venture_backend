@@ -12,6 +12,7 @@ from rest_framework import generics
 from django.http import JsonResponse
 
 import requests
+import os
 
 # def trip_list(req):
 #     trips = Trip.objects.all()
@@ -87,10 +88,71 @@ class GuidelineDetail(generics.RetrieveUpdateDestroyAPIView):
 #     serializer_class = TripSerializer   
 #     queryset = Trip.objects.all()     
 
+searchOptions = {
+    'apiVersion': '1',
+    'key': os.environ['TRAVEL_SAFE_KEY'],
+    # key: os.environ['TRAVEL_SAFE_KEY_PROD'],
+    'baseUrl': 'https://sandbox.travelperk.com',
+    # baseUrl: 'https://api.travelperk.com',
+    'api': '/travelsafe',
+    # icebox - https://developers.travelperk.com/docs/rest-api
+    # endpoint: '/restrictions',
+    # endpoint: '/airline_safety_measures',
+    'endpoint': '/guidelines'
+}
 
-def proxy(req):
-    r = requests.get(url='https://www.thecolorapi.com/id?hex=FFFF00')
-    data = r.json()
-    print(r.status_code)
-    print(data)
-    return JsonResponse(data, safe=False)
+# searchParams = {
+#     'locationType': "country_code",
+#     'location': "" + event.target.value
+# }
+
+def proxy(req, lt, loc):
+    pURL = f"{searchOptions['baseUrl']}{searchOptions['api']}{searchOptions['endpoint']}?location_type={lt}&location={loc}"
+
+    pHeaders = {
+        'Authorization': 'ApiKey ' + os.environ['TRAVEL_SAFE_KEY'],
+        'Accept': 'application/json',
+        'Api-Version': '1',
+        'Accept-Language': 'en'
+    }
+
+    try:
+        # r = requests.get(url='https://www.thecolorapi.com/id?hex=FFFF00')
+        # print('req')
+        # print(pretty_request(req))
+        r = requests.get(url=pURL, headers=pHeaders)
+        data = r.json()
+        print(r.status_code)
+        print(data)
+        return JsonResponse(data, safe=False)
+    except requests.exceptions.HTTPError as errh:
+        print(errh)
+    except requests.exceptions.ConnectionError as errc:
+        print(errc)
+    except requests.exceptions.Timeout as errt:
+        print(errt)
+    except requests.exceptions.RequestException as err:
+        print(err)
+
+# ref - https://gist.github.com/defrex/6140951
+def pretty_request(request):
+    headers = ''
+    for header, value in request.META.items():
+        if not header.startswith('HTTP'):
+            continue
+        header = '-'.join([h.capitalize() for h in header[5:].lower().split('_')])
+        headers += '{}: {}\n'.format(header, value)
+
+    return (
+        '{method} HTTP/1.1\n'
+        'Content-Length: {content_length}\n'
+        'Content-Type: {content_type}\n'
+        '{headers}\n\n'
+        '{body}'
+    ).format(
+        method=request.method,
+        content_length=request.META['CONTENT_LENGTH'],
+        content_type=request.META['CONTENT_TYPE'],
+        headers=headers,
+        body=request.body,
+    )
