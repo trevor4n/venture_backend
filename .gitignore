@@ -1,5 +1,6 @@
 settings.sql
 Pipfile.lock
+demo.py
 #.vscode
 
 # Heroku Deployment

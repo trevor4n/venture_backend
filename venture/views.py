@@ -91,7 +91,7 @@ class GuidelineDetail(generics.RetrieveUpdateDestroyAPIView):
 searchOptions = {
     'apiVersion': '1',
     'key': os.environ['TRAVEL_SAFE_KEY'],
-    'prodKey': os.environ['TRAVEL_SAFE_KEY_PROD'],
+    # 'key': os.environ['TRAVEL_SAFE_KEY_PROD'],
     'baseUrl': 'https://sandbox.travelperk.com',
     # 'baseUrl': 'https://api.travelperk.com',
     'api': '/travelsafe',
@@ -116,9 +116,7 @@ def proxy(req, lt, loc):
     pURL = f"{searchOptions['baseUrl']}{searchOptions['api']}{searchOptions['endpoint']}?location_type={lt}&location={loc}"
 
     pHeaders = {
-        # 'Authorization': 'ApiKey ' + os.environ['TRAVEL_SAFE_KEY'],
         'Authorization': 'ApiKey ' + searchOptions['key'],
-        # 'Authorization': 'ApiKey ' + searchOptions['prodKey'],
         'Accept': 'application/json',
         'Api-Version': '1',
         'Accept-Language': 'en'
@@ -131,7 +129,7 @@ def proxy(req, lt, loc):
         r = requests.get(url=pURL, headers=pHeaders)
         data = r.json()
         print(r.status_code)
-        # print(data)
+        print(data)
         return JsonResponse(data, safe=False)
     except requests.exceptions.HTTPError as errh:
         print(errh)
