@@ -91,9 +91,9 @@ class GuidelineDetail(generics.RetrieveUpdateDestroyAPIView):
 searchOptions = {
     'apiVersion': '1',
     'key': os.environ['TRAVEL_SAFE_KEY'],
-    # key: os.environ['TRAVEL_SAFE_KEY_PROD'],
+    'prodKey': os.environ['TRAVEL_SAFE_KEY_PROD'],
     'baseUrl': 'https://sandbox.travelperk.com',
-    # baseUrl: 'https://api.travelperk.com',
+    # 'baseUrl': 'https://api.travelperk.com',
     'api': '/travelsafe',
     # icebox - https://developers.travelperk.com/docs/rest-api
     # endpoint: '/restrictions',
@@ -107,10 +107,18 @@ searchOptions = {
 # }
 
 def proxy(req, lt, loc):
+    # stretch - Travel Restrictions parametric url
+    # ref - https://developers.travelperk.com/docs/travel-restrictions
+    # stretch - Airline Safety Measurres parametric url
+    # ref - https://developers.travelperk.com/docs/airline-safety-measures
+    # wip - Travel Guidelines parametric url
+    # ref - https://developers.travelperk.com/reference#retrieve-a-local-guideline
     pURL = f"{searchOptions['baseUrl']}{searchOptions['api']}{searchOptions['endpoint']}?location_type={lt}&location={loc}"
 
     pHeaders = {
-        'Authorization': 'ApiKey ' + os.environ['TRAVEL_SAFE_KEY'],
+        # 'Authorization': 'ApiKey ' + os.environ['TRAVEL_SAFE_KEY'],
+        'Authorization': 'ApiKey ' + searchOptions['key'],
+        # 'Authorization': 'ApiKey ' + searchOptions['prodKey'],
         'Accept': 'application/json',
         'Api-Version': '1',
         'Accept-Language': 'en'
@@ -123,7 +131,7 @@ def proxy(req, lt, loc):
         r = requests.get(url=pURL, headers=pHeaders)
         data = r.json()
         print(r.status_code)
-        print(data)
+        # print(data)
         return JsonResponse(data, safe=False)
     except requests.exceptions.HTTPError as errh:
         print(errh)
