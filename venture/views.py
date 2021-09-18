@@ -90,10 +90,13 @@ class GuidelineDetail(generics.RetrieveUpdateDestroyAPIView):
 
 searchOptions = {
     'apiVersion': '1',
+
+    # FLAGS
     'key': os.environ['TRAVEL_SAFE_KEY'],
     # 'key': os.environ['TRAVEL_SAFE_KEY_PROD'],
     'baseUrl': 'https://sandbox.travelperk.com',
     # 'baseUrl': 'https://api.travelperk.com',
+
     'api': '/travelsafe',
     # icebox - https://developers.travelperk.com/docs/rest-api
     # endpoint: '/restrictions',
